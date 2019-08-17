@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 
 class CreateUsersTable extends Migration
 {
@@ -28,6 +29,18 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
 //            $table->timestamps();
         });
+
+        if (Schema::hasTable('users')) {
+            DB::table('users')->insert([
+                'name'  => '이철원',
+                'email' => 'chlwn.lee@gmail.com',
+                'password' => bcrypt('secret'),
+                'remember_token' => Str::random(10),
+                'is_admin'  => 1,
+                'role'      => 'developer'
+            ]);
+        }
+
     }
 
     /**
